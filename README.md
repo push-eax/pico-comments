@@ -1,4 +1,4 @@
-#pico-comments
+# pico-comments
 
 This plugin implements comments for Pico CMS.
 
