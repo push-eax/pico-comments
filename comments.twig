@@ -1,0 +1,57 @@
+{% macro print_comments(comments, reply) %}
+    {% for comment in comments %}
+    <div id="{{ comment.guid }}" class="comment{{ reply ? " reply" : "" }}">
+        <span class="comment-author">{{ comment.author }}</span>
+        <span class="comment-date"> writes on {{ comment.date | date('F j Y') }}:</span>
+        <p class="comment-content">{{ comment.content|raw }}</p>
+        <a onclick="e = document.getElementById('{{ comment.guid }}').getElementsByTagName('form')[0]; if(window.getComputedStyle(e).display === 'none') { e.style.display = 'block' } else { e.style.display = 'none' };">Reply</a>
+
+         <form name="comments-form" class="comments-form" action="#{{ comment.guid }}" method="post">
+            <dl>
+                <dt><label for="comment_author">Name:</label></dt>
+                <dd><input type="text" id="comment_author" name="comment_author"></dd>
+                
+                <dt><label for="comment_content">Comment:</label></dt>
+                <dd><textarea id="comment_content" name="comment_content"></textarea></dd>
+            </dl>
+            <input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
+            {# honeypot field - comment will be rejected if filled out #}
+            <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+            <input type="submit" value="Submit">
+        </form>
+        {% if comment.replies is not empty %}
+            {{ _self.print_comments(comment.replies, true) }}
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endmacro %}
+
+{% if meta.comments %}
+    {% if comments_message is defined %}
+        <span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
+            {{ comments_message }}
+        </span>
+    {% endif %}
+    <form name="comments-form" class="comments-form" action="#comments-message" method="post">
+        <h3>Write a comment</h3>
+        <dl>
+            <dt><label for="comment_author">Name:</label></dt>
+            <dd><input type="text" id="comment_author" name="comment_author"></dd>
+            
+            <dt><label for="comment_content">Comment:</label></dt>
+            <dd><textarea id="comment_content" name="comment_content"></textarea></dd>
+        </dl>
+        {# honeypot field - comment will be rejected if filled out #}
+        <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+        <input type="submit" value="Submit">
+    </form>
+{% else %}
+    <span id="comments-message" class="notices yellow">Comment submission is disabled for this page</span>
+{% endif %}
+{% if comments is defined %}
+    <h4>{{ comments_number }} comments</h4>
+    {{ print_comments(comments, false) }}
+{% else %}
+    <h3>No comments yet</h3>
+{% endif %}
+
