@@ -2,7 +2,7 @@
 
 This plugin implements comments for Pico CMS.
 
-I wrote this for my own personal use, but felt that because a comments plugin for Pico did not exist yet that others might get some use out of it. 
+I wrote this for my own personal use, but felt that others might get some use out of it because a comments plugin for Pico did not exist yet.
 
 Features
 ---
