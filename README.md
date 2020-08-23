@@ -118,6 +118,6 @@ Contributing
 ---
 I welcome suggestions, comments, and code. 
 - If you feel your contribution would improve this plugin for the general use case, please submit a pull request. 
-- If you find a bug, open an issue and describe what's happening. Please include verbose PHP and web server logs and screenshots of the issue, where applicable.
+- If you find a bug, open an issue and describe what's happening. Please include verbose PHP and web server logs (with sensitive info redacted) and screenshots of the issue, where applicable.
 
 I don't have a lot of time to continue development of this plugin except for my own purposes. I can't guarantee that I will fix issues or implement new features promptly, or at all. If I do, and if I believe such improvements would be useful to users, I will release them.
