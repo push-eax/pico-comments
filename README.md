@@ -17,22 +17,40 @@ Features
 Usage and configuration
 ---
 To use this plugin, you need to:
-1. Add PicoComments.php to your Pico plugins directory
-2. Configure and enable it in your config.yml
-3. Add comment submission forms and rendering macros to your theme
-
-The plugin is configured in the site config.yml like so:
+1. Add PicoComments.php to a folder in your Pico plugins directory, e.g ; `pico/plugins/PicoComments`
 ```
+pico/plugins
+   ├── PicoComments
+          ├── comments.twig
+          ├── LICENSE
+          ├── PicoComments.php
+          └── README.md
+```
+2. Configure and enable it in your `config.yml` by adding the following section :
+```yml
 PicoComments:
     # whether the comments plugin is enabled. comment data will not be available to Twig if this is false
     enabled: true
     # maximum character size of comments. comments larger than this will be rejected
-    comment_size_limit: 40000
+    comment_size_limit: 1000
     # whether comments must be approved before displaying them to other users
     comment_review: false
 ```
+3. Put the `comments.twig` file in your theme's folder, e.g `pico/themes/default`;
+```
+pico
+  └─ themes
+        └─ default
+              ├── [...]
+              └── comments.twig
+```
+then in your theme's `index.twig` file, add the following [twig instruction](https://twig.symfony.com/doc/1.x/tags/include.html) : 
+```php
+{{ include('comments.twig') }}
+```
+where you want the form to appear. 
 
-Comment submission can be enabled/disabled for each page in that page's frontmatter:
+4. Comment submission can be enabled/disabled for each page in that page's frontmatter:
 ```
 ---
 comments: true

@@ -50,7 +50,7 @@
 {% endif %}
 {% if comments is defined %}
     <h4>{{ comments_number }} comments</h4>
-    {{ print_comments(comments, false) }}
+    {{ _self.print_comments(comments, false) }}
 {% else %}
     <h3>No comments yet</h3>
 {% endif %}
