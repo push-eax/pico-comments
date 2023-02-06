@@ -9,7 +9,7 @@
 class PicoComments extends AbstractPicoPlugin
 {
     protected $enabled = true;                      // whether this plugin is enabled by default sitewide
-    protected $content_path = __DIR__ . '/content'; // content storage path. by default this is inside the plugin directory itself so that everything is self-contained
+    protected $content_path = __DIR__ . '/../blog-comments'; // content storage path
     protected $headers;                             // current page headers ("meta", "frontmatter", NOT HTML headers)
     protected $id;                                  // current page URL ("id")
     protected $num_comments = 0;                    // number of comments on this page
@@ -105,7 +105,6 @@ class PicoComments extends AbstractPicoPlugin
                 $comment = [
                     'content' => $content
                 ];
-                
                 foreach($meta as $key => $value) {
                     if (strlen($meta[$key]) > 0) {
                         $comment[$key] = $value;
@@ -126,6 +125,8 @@ class PicoComments extends AbstractPicoPlugin
         
         // this recursive function builds and sorts the child-pointer tree
         function insert_replies(&$array, &$comments) {
+            if (!is_array($array) || !is_object($array))
+                return;
             foreach($array as &$comment) {
                 // if this comment has children,
                 if (isset($comments[$comment['guid']])) {
@@ -150,8 +151,9 @@ class PicoComments extends AbstractPicoPlugin
         // remove the extra array wrapper around the top level
         $comments = $comments[""];
         // sort the top level
+        if (!is_array($comments) && !is_object($comments))
+           return;
         usort($comments, function($a, $b) { return $b['date'] <=> $a['date']; });
-
         return $comments;
     }
 

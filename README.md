@@ -74,7 +74,16 @@ All other comment properties (guid, date of posting, ip address, pending review)
 
 Comment content and author names are sanitized before being saved. Comment reply GUIDs are validated before the comment is saved, and if the comment pointed to by the reply GUID does not exist, the comment will not be accepted.
 
-Comments are stored as files in the plugin's ```content``` directory in a manner very similar to Pico's own page structure. The structure of a comment file is as follows:
+Comments are stored as files in a a folder named ```blog-comments``` in a manner very similar to Pico's own page structure. 
+If the folder creation fails, please create the folder yourself next to the ``ìndex.php`` and give it the correct access rights. Named 0755 for the file mode and the WWW user as owner. So under Linux for example via:
+```
+cd picocms
+cd picocms
+mkdir blog-comments
+chmod 0775 blog-comments && chown www-data:www-data blog-comments
+```
+
+The structure of a comment file is as follows:
 ```
 ---
 guid
